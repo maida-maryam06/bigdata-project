@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Smart City Traffic Analytics Dashboard</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <style>
+        .dashboard {
+            padding: 20px;
+            max-width: 1200px;
+            margin: 0 auto;
+            background: #f8f9fa;
+            min-height: 100vh;
+        }
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin-bottom: 30px;
+        }
+        .stat-card {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+        .stat-card h3 {
+            color: #666;
+            font-size: 14px;
+            margin-bottom: 10px;
+        }
+        .stat-card .value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #333;
+        }
+        .data-section {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+            margin-bottom: 20px;
+        }
+        .alert-high { border-left: 4px solid #dc3545; background: #f8d7da; }
+        .alert-medium { border-left: 4px solid #ffc107; background: #fff3cd; }
+        .alert-low { border-left: 4px solid #17a2b8; background: #d1ecf1; }
+        .refresh-btn {
+            background: #28a745;
+            color: white;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-bottom: 10px;
+            margin-right: 10px;
+        }
+        .refresh-btn:hover {
+            background: #218838;
+        }
+        .loading {
+            color: #666;
+            font-style: italic;
+        }
+        .error {
+            color: #dc3545;
+            background: #f8d7da;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .success {
+            color: #155724;
+            background: #d4edda;
+            padding: 10px;
+            border-radius: 5px;
+        }
+    </style>
+</head>
+<body>
+    <div class="dashboard">
+        <div class="header">
+            <h1>🚦 Smart City Traffic Analytics Dashboard</h1>
+            <div>
+                <span id="currentTime" style="margin-right: 15px; font-weight: bold;"></span>
+                <button onclick="logout()" style="background: #dc3545; color: white; border: none; padding: 8px 15px; border-radius: 5px; cursor: pointer;">Logout</button>
+            </div>
+        </div>
+
+        <!-- Real-time Statistics -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <h3>👥 Total Users</h3>
+                <div id="userCount" class="value">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>🚗 Traffic Records</h3>
+                <div id="trafficCount" class="value">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>🚨 Active Alerts</h3>
+                <div id="alertCount" class="value">0</div>
+            </div>
+            <div class="stat-card">
+                <h3>📏 Avg Speed</h3>
+                <div id="avgSpeed" class="value">0 km/h</div>
+            </div>
+        </div>
+
+        <!-- Real-time Analytics Section -->
+        <div class="data-section">
+            <h2>📊 Live Traffic Analytics</h2>
+            <button class="refresh-btn" onclick="loadRealTimeStats()">🔄 Refresh Live Data</button>
+            <button class="refresh-btn" onclick="loadCongestionAlerts()">🚨 Refresh Alerts</button>
+            <div id="realTimeStats" class="loading">
+                Loading real-time data...
+            </div>
+        </div>
+
+        <!-- Congestion Alerts Section -->
+        <div class="data-section">
+            <h2>🚨 Live Congestion Alerts</h2>
+            <div id="congestionAlerts" class="loading">
+                Loading congestion alerts...
+            </div>
+        </div>
+
+        <!-- Recent Traffic Data -->
+        <div class="data-section">
+            <h2>📋 Recent Traffic Data</h2>
+            <button class="refresh-btn" onclick="loadTrafficData()">🔄 Refresh Data</button>
+            <div id="trafficData" class="loading">
+                Loading traffic data...
+            </div>
+        </div>
+
+        <!-- Data Simulation Controls -->
+        <div class="data-section">
+            <h2>🎮 Data Simulation Controls</h2>
+            <button class="refresh-btn" onclick="addSampleData()">➕ Add Sample Traffic Data</button>
+            <p style="margin-top: 10px; font-size: 12px; color: #666;">
+                The system is automatically generating realistic traffic patterns with 200 simulated vehicles.
+                Data refreshes automatically every 15 seconds.
+            </p>
+        </div>
+
+        <!-- System Status -->
+        <div class="data-section">
+            <h2>⚙️ System Status</h2>
+            <div id="systemStatus" class="loading">
+                Checking system status...
+            </div>
+        </div>
+    </div>
+
+    <script src="js/auth.js"></script>
+    <script src="js/dashboard.js"></script>
+</body>
+</html>
